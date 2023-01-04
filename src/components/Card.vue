@@ -2,14 +2,16 @@
     <div>
         <el-row :gutter="20" v-for="row in rowCount" :key="row">
             <el-col :span="6" v-for="col in 4" :key="col">
-                <el-card v-if="(row - 1) * 4 + col < tools.length" :set="tool = tools[(row - 1) * 4 + col]"
-                 shadow="hover" :body-style="{ padding: '0px' }" @click.native="route(tool.link)">
+                <el-card v-if="(row - 1) * 4 + col - 1 < tools.length" :set="tool = tools[(row - 1) * 4 + col - 1]"
+                 shadow="hover" :body-style="{ padding: '0px' }" @click.native="route(tool)">
                     <img :src="tool.img"
                         class="image">
                     <div style="padding: 14px;">
                         <span class="name">{{ tool.name }}</span>
-                        <div class="bottom clearfix">
+                        <div>
                             <span>{{ tool.desc }}</span>
+                        </div>
+                        <div class="bottom clearfix">
                             <time class="time">{{ tool.date }}</time>
                         </div>
                     </div>
@@ -30,7 +32,12 @@ export default {
         }
     },
     methods: {
-        route(link) {
+        route(tool) {
+            if (tool.openNewWindow) {
+                window.open(tool.link)
+            } else {
+                window.location.href = tool.link
+            }
         }
     },
     mounted() {

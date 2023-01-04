@@ -4,7 +4,7 @@
     <el-main>
       <el-row>
         <el-col :offset="3" :span="18">
-          <Card :dataUrl="`http://localhost:8080/tools.json`"/>
+          <Card :dataUrl="`http://localhost:8080/tools.json`" />
         </el-col>
       </el-row>
     </el-main>
@@ -24,13 +24,29 @@ export default {
 </script>
 
 <style scoped>
-.el-header, .el-footer {
+
+.el-container {
+  min-height: 100vh;
+}
+
+.el-header,
+.el-footer {
   background-color: #B3C0D1;
   color: #333;
   text-align: center;
   line-height: 60px;
 }
+
+.el-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+}
+
 .el-main {
+  margin-top: 60px;
   background-color: #E9EEF3;
   color: #333;
   text-align: center;
