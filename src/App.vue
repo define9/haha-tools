@@ -1,6 +1,8 @@
 <template>
   <el-container>
-    <el-header>Header</el-header>
+    <el-header>
+      <Header></Header>
+    </el-header>
     <el-main>
       <el-row>
         <el-col :offset="3" :span="18">
@@ -14,24 +16,25 @@
 
 <script>
 import Card from "./components/Card.vue"
+import Header from "./components/Header.vue";
 
 export default {
   name: 'App',
   components: {
-    Card
+    Card,
+    Header
   }
 }
 </script>
 
 <style scoped>
-
 .el-container {
   min-height: 100vh;
 }
 
 .el-header,
 .el-footer {
-  background-color: #B3C0D1;
+  background-color: white;
   color: #333;
   text-align: center;
   line-height: 60px;
@@ -47,8 +50,10 @@ export default {
 
 .el-main {
   margin-top: 60px;
-  background-color: #E9EEF3;
   color: #333;
   text-align: center;
+  background-image: linear-gradient(90deg, rgba(180, 180, 180, 0.15) 10%, rgba(0, 0, 0, 0) 10%),
+    linear-gradient(rgba(180, 180, 180, 0.15) 10%, rgba(0, 0, 0, 0) 10%);
+  background-size: 20px 20px;
 }
 </style>
