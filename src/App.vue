@@ -1,28 +1,36 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <el-container>
+    <el-header>Header</el-header>
+    <el-main>
+      <el-row>
+        <el-col :offset="3" :span="18"><Card/></el-col>
+      </el-row>
+    </el-main>
+    <el-footer>Footer</el-footer>
+  </el-container>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Card from "./components/Card.vue"
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Card
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<style scoped>
+.el-header, .el-footer {
+  background-color: #B3C0D1;
+  color: #333;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  line-height: 60px;
+}
+.el-main {
+  background-color: #E9EEF3;
+  color: #333;
+  text-align: center;
 }
 </style>
