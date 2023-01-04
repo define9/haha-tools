@@ -3,7 +3,9 @@
     <el-header>Header</el-header>
     <el-main>
       <el-row>
-        <el-col :offset="3" :span="18"><Card/></el-col>
+        <el-col :offset="3" :span="18">
+          <Card :dataUrl="`http://localhost:8080/tools.json`"/>
+        </el-col>
       </el-row>
     </el-main>
     <el-footer>Footer</el-footer>

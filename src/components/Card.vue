@@ -1,29 +1,16 @@
 <template>
     <div>
-        <el-row :gutter="20">
-            <el-col :span="6" v-for="(o, index) in 4" :key="o">
-                <el-card shadow="hover" :body-style="{ padding: '0px' }">
-                    <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+        <el-row :gutter="20" v-for="row in rowCount" :key="row">
+            <el-col :span="6" v-for="col in 4" :key="col">
+                <el-card v-if="(row - 1) * 4 + col < tools.length" :set="tool = tools[(row - 1) * 4 + col]"
+                 shadow="hover" :body-style="{ padding: '0px' }" @click.native="route(tool.link)">
+                    <img :src="tool.img"
                         class="image">
                     <div style="padding: 14px;">
-                        <span>好吃的汉堡</span>
+                        <span class="name">{{ tool.name }}</span>
                         <div class="bottom clearfix">
-                            <time class="time">{{ currentDate }}</time>
-                            <el-button type="text" class="button">操作按钮</el-button>
-                        </div>
-                    </div>
-                </el-card>
-            </el-col>
-        </el-row>
-        <el-row :gutter="20">
-            <el-col :span="6" v-for="(o, index) in 4" :key="o">
-                <el-card shadow="hover" :body-style="{ padding: '0px' }">
-                    <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                        class="image">
-                    <div style="padding: 14px;">
-                        <span>好吃的汉堡</span>
-                        <div class="bottom clearfix">
-                            <time class="time">{{ currentDate }}</time>
+                            <span>{{ tool.desc }}</span>
+                            <time class="time">{{ tool.date }}</time>
                         </div>
                     </div>
                 </el-card>
@@ -33,17 +20,43 @@
 </template>
 
 <script>
+import axios from "axios"
+
 export default {
     name: 'MCard',
     data() {
         return {
-            currentDate: new Date()
-        };
+            tools: []
+        }
+    },
+    methods: {
+        route(link) {
+        }
+    },
+    mounted() {
+        const url = this.dataUrl == null ? "/tools.json" : this.dataUrl
+        axios.get(url)
+        .then(res => {
+            this.tools = res.data
+        })
+    },
+    computed: {
+        rowCount(){
+            return Math.ceil(this.tools.length / 4)
+        }
+    },
+    props: {
+        dataUrl: String
     }
 }
 </script>
   
 <style scoped>
+.name {
+    font-size: larger;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
 .el-card {
     cursor: pointer;
 }
