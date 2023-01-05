@@ -2,8 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 
 import vueMiniPlayer from 'vue-mini-player'
-import 'vue-mini-player/lib/vue-mini-player.css'
 import ElementUI from 'element-ui'
+
+import 'vue-mini-player/lib/vue-mini-player.css'
 import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(vueMiniPlayer)

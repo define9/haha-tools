@@ -1,28 +1,33 @@
 <template>
   <el-container>
     <el-header>
-      <Header />
+      <Header></Header>
     </el-header>
     <el-main>
+      <el-backtop></el-backtop>
       <el-row>
         <el-col :offset="3" :span="18">
           <Card :dataUrl="`http://localhost:8080/tools.json`" />
         </el-col>
       </el-row>
     </el-main>
-    <el-footer>Footer</el-footer>
+    <el-footer>
+      <Footer></Footer>
+    </el-footer>
   </el-container>
 </template>
 
 <script>
 import Card from "./components/Card.vue"
-import Header from "./components/Header.vue";
+import Header from "./components/Header.vue"
+import Footer from "./components/Footer.vue"
 
 export default {
   name: 'App',
   components: {
     Card,
-    Header
+    Header,
+    Footer
   }
 }
 </script>
@@ -52,6 +57,9 @@ export default {
   margin-top: 60px;
   color: #333;
   text-align: center;
+
+}
+.el-main, .el-footer {
   background-image: linear-gradient(90deg, rgba(180, 180, 180, 0.15) 10%, rgba(0, 0, 0, 0) 10%),
     linear-gradient(rgba(180, 180, 180, 0.15) 10%, rgba(0, 0, 0, 0) 10%);
   background-size: 20px 20px;
