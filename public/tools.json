@@ -166,5 +166,13 @@
         "link": "http://ip111.cn/",
         "openNewWindow": true,
         "date": "2023/01/04"
+    },
+    {
+        "name": "ipv6支持查询",
+        "img": "https://i.328888.xyz/2023/01/04/WCc23.th.jpeg",
+        "desc": "查询您的网络对IPv6的支持情况",
+        "link": "http://ipv6-test.ch/",
+        "openNewWindow": true,
+        "date": "2023/01/04"
     }
 ]

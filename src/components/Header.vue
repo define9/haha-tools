@@ -4,8 +4,8 @@
         <el-col :span="6">2</el-col>
         <el-col :span="6">3</el-col>
         <el-col :span="4">
-            <el-input placeholder="请输入内容" v-model="input" class="searchClass">
-                <el-button slot="append" icon="el-icon-search"></el-button>
+            <el-input @keyup.enter.native="search" placeholder="键入以搜索工具" v-model="searchText">
+                <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
             </el-input>
         </el-col>
         <el-col :span="2">
@@ -14,7 +14,19 @@
 </template>
 
 <script>
+import eventBus from '../eventBus.js'
+
 export default ({
-    name: "Header"
+    name: "Header",
+    data() {
+        return {
+            searchText: ""
+        }
+    },
+    methods: {
+        search() {
+            eventBus.$emit('searchTool', this.searchText)
+        }
+    }
 })
 </script>
