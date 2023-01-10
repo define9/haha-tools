@@ -16,11 +16,11 @@
         "date": "2023/01/04"
     },
     {
-        "name": "IP查询",
+        "name": "m3u8在线",
         "img": "https://i.328888.xyz/2023/01/04/WCmEy.th.png",
         "desc": "在国内外查询您的IP",
-        "link": "http://ip111.cn/",
-        "openNewWindow": true,
+        "link": "/m3u8Online",
+        "openNewWindow": false,
         "date": "2023/01/04"
     },
     {

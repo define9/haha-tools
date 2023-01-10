@@ -7,7 +7,7 @@
       <el-backtop></el-backtop>
       <el-row>
         <el-col :offset="3" :span="18">
-          <Card :dataUrl="`http://localhost:8080/tools.json`" />
+          <router-view></router-view>
         </el-col>
       </el-row>
     </el-main>
@@ -19,8 +19,8 @@
 
 <script>
 import Card from "./components/Card.vue"
-import Header from "./components/Header.vue"
-import Footer from "./components/Footer.vue"
+import Header from "./components/common/Header.vue"
+import Footer from "./components/common/Footer.vue"
 
 export default {
   name: 'App',

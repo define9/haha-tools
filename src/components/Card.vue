@@ -50,7 +50,7 @@ export default {
             if (tool.openNewWindow) {
                 window.open(tool.link)
             } else {
-                window.location.href = tool.link
+                this.$router.push(tool.link)
             }
         },
         isShowToltip(e, i) {

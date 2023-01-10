@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import eventBus from '../eventBus.js'
+import eventBus from '../../eventBus.js'
 
 export default ({
     name: "Header",
