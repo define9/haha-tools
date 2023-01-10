@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="loading">
         <el-empty v-if="tools.length == 0" description="这里什么都没有"></el-empty>
         <el-row :gutter="20" v-for="row in rowCount" :key="row">
             <el-col :span="6" v-for="col in 4" :key="col">
@@ -39,6 +39,7 @@ export default {
             tools: [],
             originTools: [],
             searching: false,
+            loading: false
         }
     },
     methods: {
@@ -58,6 +59,7 @@ export default {
         }
     },
     mounted() {
+        this.loading = true
         const url = this.dataUrl == null ? "/tools.json" : this.dataUrl
         axios.get(url)
             .then(res => {
@@ -66,11 +68,14 @@ export default {
                 })
                 this.originTools = res.data
                 this.tools = res.data
+                this.loading = false
             })
         eventBus.$on('searchTool', val => {
+            this.loading = true
             if (val.length === 0) {
                 this.tools = this.originTools
                 this.searching = false
+                this.loading = false
                 return
             }
             this.tools = []
@@ -83,6 +88,7 @@ export default {
                     this.tools.push(tool)
                 }
             })
+            this.loading = false
         })
     },
     computed: {
@@ -112,6 +118,9 @@ export default {
 
 .el-card {
     cursor: pointer;
+}
+.el-card:hover {
+    box-shadow: 0 10px 32px 0 rgba(0,0,0,.15) !important;
 }
 
 .el-row {
