@@ -1,9 +1,9 @@
 <template>
   <div>
     <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions"
-      @canplay="canplay($event)" @ready="playerReadied">
+      @ready="playerReadied" @pause="onPlayerPause($event)">
     </video-player>
-    <el-input class="url" placeholder="请输入您的地址" v-model="url">
+    <el-input class="url" placeholder="请输入您的地址 http://xxx.xx/xx.m3u8" v-model="url">
       <el-button slot="append" icon="el-icon-s-promotion" @click="parse"></el-button>
     </el-input>
   </div>
@@ -16,10 +16,10 @@ export default {
   data() {
     return {
       url: '',
-      player: null,
+      target: '', // m3u8的host
       playerOptions: {
-        // playbackRates: [0.5, 1.0, 1.5, 2.0], // 可选的播放速度
-        controls: false, //是否显示控制条
+        playbackRates: [0.5, 1.0, 1.5, 2.0], // 可选的播放速度
+        controls: true, //是否显示控制条
         autoplay: true, // 如果为true,浏览器准备好时开始回放。
         muted: false, // 默认情况下将会消除任何音频。
         loop: false, // 是否视频一结束就重新开始。
@@ -30,34 +30,23 @@ export default {
         sources: [{
           type: 'application/x-mpegURL', // 这里的种类支持很多种：基本视频格式、直播、流媒体等，具体可以参看git网址项目
           src:
-            '/proxy/20211212/QfR7JMfH/hls/index.m3u8?target=' + encodeURI('https://2q.avstatic.com')
+            'http://playertest.longtailvideo.com/adaptive/bipbop/gear4/prog_index.m3u8'
+            //'/proxy/20211212/QfR7JMfH/hls/index.m3u8?target=' + encodeURI('https://2q.avstatic.com')
         }],
         poster: '', // 封面地址
         notSupportedMessage: '此视频暂无法播放，请稍后再试', // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
         controlBar: {
-          // timeDivider: true, // 当前时间和持续时间的分隔符
-          // durationDisplay: true, // 显示持续时间
-          // remainingTimeDisplay: false, // 是否显示剩余时间功能
-          // fullscreenToggle: true // 是否显示全屏按钮
+          timeDivider: true, // 当前时间和持续时间的分隔符
+          durationDisplay: true, // 显示持续时间
+          remainingTimeDisplay: false, // 是否显示剩余时间功能
+          fullscreenToggle: true // 是否显示全屏按钮
         }
       }
     }
   },
   methods: {
-    canplay(e) {
-      this.player = e
-    },
     playerReadied(player) {
-      return
-      let _this = this
-      var hls = player.tech({ IWillNotUseThisInPlugins: true }).hls
       player.tech_.hls.xhr.beforeRequest = function (options) {
-        console.log(options)
-        let userInfo = localStorage.getItem('userInfo')
-        let token = JSON.parse(userInfo).accessToken
-        options.headers = {
-          'Referer': 'https://theav108.com/'
-        }
         return options
       }
     },
@@ -71,9 +60,14 @@ export default {
         }]
         found = true
       } else if (realUrl.endsWith('.m3u8')) {
+        this.target = this.url.match(/^http(s)?:\/\/(.*?)\//ig)[0].slice(0, -1) // http://a.com/
+        let proxyUrl = '/proxy' + this.url.replace(this.target, '')
+        proxyUrl = `${proxyUrl}?target=${this.target}`
+        console.log(proxyUrl)
+
         this.playerOptions.sources = [{
           type: 'application/x-mpegURL',
-          src: this.url
+          src: proxyUrl
         }]
         found = true
       }
@@ -84,7 +78,15 @@ export default {
         );
         this.player.play()
       }
+    },
+    onPlayerPause($event) {
+      this.isPlay = false
     }
+  },
+  computed: {
+    player() {
+      return this.$refs.videoPlayer.player;
+    },
   }
 }
 </script>

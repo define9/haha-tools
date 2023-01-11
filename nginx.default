@@ -52,7 +52,7 @@ server {
 	}
 
 	location /proxy {
-		if (!-f $arg_target) {
+		if ($arg_target = '') {
 			return 400;
 		}
 		proxy_pass $arg_target;
