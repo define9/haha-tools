@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import eventBus from '../eventBus.js'
-import Menu from './Menu.vue'
+import eventBus from '../../eventBus.js'
+import Menu from '../Menu.vue'
 
 export default ({
     name: "Header",

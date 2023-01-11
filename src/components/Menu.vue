@@ -16,7 +16,9 @@
 export default ({
     name: 'Menu',
     data() {
-
+        return {
+            
+        }
     },
     methods: {
         handleOpen(key, keyPath) {
