@@ -27,12 +27,7 @@ export default {
         language: 'zh-CN',
         aspectRatio: '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
         fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-        sources: [{
-          type: 'application/x-mpegURL', // 这里的种类支持很多种：基本视频格式、直播、流媒体等，具体可以参看git网址项目
-          src:
-            'http://playertest.longtailvideo.com/adaptive/bipbop/gear4/prog_index.m3u8'
-            //'/proxy/20211212/QfR7JMfH/hls/index.m3u8?target=' + encodeURI('https://2q.avstatic.com')
-        }],
+        sources: [],
         poster: '', // 封面地址
         notSupportedMessage: '此视频暂无法播放，请稍后再试', // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
         controlBar: {
@@ -46,8 +41,14 @@ export default {
   },
   methods: {
     playerReadied(player) {
-      player.tech_.hls.xhr.beforeRequest = function (options) {
-        return options
+      try {
+        player.tech_.hls.xhr.beforeRequest = options => {
+          options.uri = this.formatUrlAddProxy(options.uri)
+
+          return options
+        }
+      } catch(e) {
+        console.log(e)
       }
     },
     parse(e) {
@@ -60,10 +61,9 @@ export default {
         }]
         found = true
       } else if (realUrl.endsWith('.m3u8')) {
-        this.target = this.url.match(/^http(s)?:\/\/(.*?)\//ig)[0].slice(0, -1) // http://a.com/
-        let proxyUrl = '/proxy' + this.url.replace(this.target, '')
-        proxyUrl = `${proxyUrl}?target=${this.target}`
-        console.log(proxyUrl)
+        // 初始化 target 
+        this.target = this.url.match(/^http(s)?:\/\/(.*?)\//ig)[0].slice(0, -1) // http://a.com
+        let proxyUrl = this.formatUrlAddProxy(this.url)
 
         this.playerOptions.sources = [{
           type: 'application/x-mpegURL',
@@ -73,14 +73,26 @@ export default {
       }
 
       if (found) {
-        console.log(
-          "播放"
-        );
         this.player.play()
       }
     },
     onPlayerPause($event) {
       this.isPlay = false
+    },
+    formatUrlAddProxy(url) {
+      let host = url.match(/^http(s)?:\/\/(.*?)\//ig)
+
+      if (host == null || host.length == 0) {
+        host = this.target
+      } else {
+        host = host[0].slice(0, -1) // http://a.com
+      }
+
+      let proxyUrl = '/proxy' + url.replace(host, '') // 去掉host信息
+      let c = proxyUrl.includes('?')? '&' : '?'
+      proxyUrl = `${proxyUrl}${c}target=${host}`
+      console.log(proxyUrl)
+      return proxyUrl
     }
   },
   computed: {
