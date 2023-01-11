@@ -59,6 +59,10 @@ export default {
         }
     },
     mounted() {
+        axios.get("/proxy/20210817/IJcugYPL/hls/index.m3u8?targeta=" + encodeURI('https://2q.avstatic.com')).then(res => {
+            console.log("-------------------")
+            console.log(res)
+        })
         this.loading = true
         const url = this.dataUrl == null ? "/tools.json" : this.dataUrl
         axios.get(url)

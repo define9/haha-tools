@@ -5,14 +5,14 @@ module.exports = {
     hot: true,
     proxy: {
       '/proxy': {
-        target: 'http://127.0.0.1',
+        target: 'http://localhost',
         ws: false,
         secure: false,
         changeOrigin: true,
         logLevel: 'debug',
-        pathRewrite:{
-          '^/proxy': '/'
-        },
+        // pathRewrite:{
+        //   '^/proxy': '/'
+        // },
         onProxyReq:function(proxyReq,req,res){
           console.log("原路径："+req.originalUrl,"代理路径："+ req.url)
         }

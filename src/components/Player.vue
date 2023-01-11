@@ -30,7 +30,7 @@ export default {
         sources: [{
           type: 'application/x-mpegURL', // 这里的种类支持很多种：基本视频格式、直播、流媒体等，具体可以参看git网址项目
           src:
-            '/proxy/20211212/QfR7JMfH/hls/index.m3u8' // url地址，从别的博主那看来的地址，亲测可用
+            '/proxy/20211212/QfR7JMfH/hls/index.m3u8?target=' + encodeURI('https://2q.avstatic.com')
         }],
         poster: '', // 封面地址
         notSupportedMessage: '此视频暂无法播放，请稍后再试', // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
