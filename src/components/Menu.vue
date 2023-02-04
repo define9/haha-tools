@@ -2,8 +2,8 @@
     <el-menu default-active="1" mode="horizontal"
      @open="handleOpen" @close="handleClose">
         <el-menu-item index="1">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
+            <i class="el-icon-house"></i>
+            <router-link to="/" >首页</router-link>
         </el-menu-item>
         <el-menu-item index="2">
             <i class="el-icon-setting"></i>
@@ -32,5 +32,13 @@ export default ({
 </script>
 
 <style scoped>
-
+.router-link-active {
+  text-decoration: none;
+  color: yellow;
+}
+a{
+  text-decoration: none;
+  color: white;
+  user-select: none;
+}
 </style>
